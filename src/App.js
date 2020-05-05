@@ -1,26 +1,58 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import FetchPost from './Components/FetchPost'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+ 
+/* useEffect example */
+/* useEffect(() => {
+  setTime(effecttime * 2)
+  
+  return () => {
+  }
+}, [effecttime, console.log('effect time track', effecttime)])
+ */
+function MyComponent() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+  const [limit, setLimit] = useState(1);
+  const [collection, setCollection] = useState();
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then(res => res.json())
+      .then(result => {
+        console.log(result)
+        setIsLoaded(true);
+         setItems(result);
+        },
+      )
+
+  }, [])
+
+  const addPost = () => {
+    setLimit(limit + 1);
+    const collections = items.filter(item=> item.id <= limit)
+    setCollection(collections);
+  }
+   
+    return (
+       <div> 
+         <button onClick={()=>{addPost()}}>Click me to add one more post</button>
+        <ul>
+          {collection && collection.map(item => 
+          <div>
+          <p key={item.id}>
+          <b>Title: </b>   {item.title}
+          </p>
+          <li>
+            {item.body}
+          </li></div>
+          )}
+        </ul>
+        </div>
+    )
+  
 }
 
-export default App;
+export default MyComponent;
