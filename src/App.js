@@ -2,8 +2,7 @@ import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import FetchPost from './Components/FetchPost'
-
- 
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 /* useEffect example */
 /* useEffect(() => {
   setTime(effecttime * 2)
@@ -12,7 +11,7 @@ import FetchPost from './Components/FetchPost'
   }
 }, [effecttime, console.log('effect time track', effecttime)])
  */
-function MyComponent() {
+function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
   const [limit, setLimit] = useState(1);
@@ -49,10 +48,12 @@ function MyComponent() {
             {item.body}
           </li></div>
           )}
+          <hr/>
         </ul>
+        
         </div>
     )
   
 }
 
-export default MyComponent;
+export default App;
